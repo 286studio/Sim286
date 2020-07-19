@@ -2,21 +2,6 @@
 Hello World, AVG! 欢迎来到NaniNovel，Unity下的AVG引擎，现在开始演示。
 首先，除脚本外，所有资源的【主目录】都在Assets/Naninovel/Resources/Naninovel里面。
 
-# Script
-脚本应以.nani为扩展名，可以不放在【主目录】里。具体请参见本项目HelloAVG.nani放在哪里。
-脚本也可以在Unity的NaniNovel菜单里管理。
-以井号“#”开头的是注释，同时【也是】行标，可用于跳转。
-以圈号“@”开头的是脚本命令。
-当然，也有选项，比如：
-286工作室吼不吼呀？[skipInput]
-@choice "吼" goto:.Hou
-@choice "不吼" goto:.BuHou
-@stop
-# BuHou
-谁说不吼的，明明就——
-# Hou
-很吼！
-
 # Music
 现在播放音乐，音乐的默认目录是【主目录】/Audio，可在Unity菜单 NaniNovel -> Configuration 里改。
 具体来说，在 AudioLoader 里面。所以其他类型资源也有对应 Loader。
@@ -34,7 +19,35 @@ Hello World, AVG! 欢迎来到NaniNovel，Unity下的AVG引擎，现在开始演
 我创建了一个Monday ticket，大家可以自行探索。
 
 # Characters
-人物要复杂一些。
+现在显示明美。明美可以有【基础资源立绘】若干张，在Mingmei Resources里指定。
+以下是Mingmei.Default：
+@char Mingmei.Default
+人物的大小在Pixels Per Unit里面调整，默认100（太大了），200比较舒服。
+以下是Mingmei.Happy：
+@char Mingmei.Happy
+还可以以【基础资源立绘】为基础，添加其他参数如色彩补正、缩放等来创建Pose。
+但Pose名字似乎不能和已有的【基础资源立绘】如Default和Happy重名。
+这是在Mingmei.Happyp基础上创建的Mingmei.PoseOne：
+@char Mingmei.PoseOne
+其中，Position的X必须设为50，明美才会在中间出现，不知为何。
+除此以外，设置完Pose后人物立绘会慢慢消失，不知为何。
+好在我们要用Animation2D人物，这个可以先不管。
+
+# Script
+脚本应以.nani为扩展名，可以不放在【主目录】里。具体请参见本项目HelloAVG.nani放在哪里。
+脚本也可以在Unity的NaniNovel菜单里管理。
+以井号“#”开头的是注释，同时【也是】行标，可用于跳转。
+以圈号“@”开头的是脚本命令。
+当然，也有选项，比如：
+286工作室吼不吼呀？[skipInput]
+@choice "吼" goto:.Hou
+@choice "不吼" goto:.BuHou
+@stop
+# BuHou
+谁说不吼的，明明就——
+# Hou
+很吼！
+此外，对话框他们叫做Printer，所以你会看到@hideprinter这种命令。
 
 
 好，我们就演示到这里，谢谢观看！

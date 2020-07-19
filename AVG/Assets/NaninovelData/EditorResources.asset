@@ -165,11 +165,16 @@ MonoBehaviour:
       Guid: 1a19c9ed263de455fbef83313428fa48
   - Id: Characters/4fd120a7-1ef8-4f86-a189-338dbcbce878
     Resources:
-    - Name: Mingmei/Default
+    - Name: Default
       PathPrefix: Characters/Mingmei
-      Guid: 8e9f61285356e46478cc35f8b7f04837
-    - Name: Mingmei/Happy
+      Guid: 44b148446645d4cb988b2f8bdd48a557
+    - Name: Happy
       PathPrefix: Characters/Mingmei
-      Guid: d6118939fd9b140b99b1910757d21625
+      Guid: d6dee50a88589469189c029ab44c8ada
   - Id: CharacterAvatars
     Resources: []
+  - Id: Audio
+    Resources:
+    - Name: Music/EverForever
+      PathPrefix: Audio
+      Guid: 82de471d841174e7fa74e5b03ca4a641
