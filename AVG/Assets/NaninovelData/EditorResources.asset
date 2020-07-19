@@ -156,4 +156,20 @@ MonoBehaviour:
       PathPrefix: Scripts
       Guid: 98383ac5dcb46402d8e8731291187cc3
   - Id: Backgrounds/5e8d038c-3243-48d3-9d45-2c1d5468d418
+    Resources:
+    - Name: PhyBuilding
+      PathPrefix: Backgrounds/MainBackground
+      Guid: b04ec1f615e6c454a8faacdac8a16e2b
+    - Name: CampFire
+      PathPrefix: Backgrounds/MainBackground
+      Guid: 1a19c9ed263de455fbef83313428fa48
+  - Id: Characters/4fd120a7-1ef8-4f86-a189-338dbcbce878
+    Resources:
+    - Name: Mingmei/Default
+      PathPrefix: Characters/Mingmei
+      Guid: 8e9f61285356e46478cc35f8b7f04837
+    - Name: Mingmei/Happy
+      PathPrefix: Characters/Mingmei
+      Guid: d6118939fd9b140b99b1910757d21625
+  - Id: CharacterAvatars
     Resources: []

@@ -1,3 +1,41 @@
 # Start
-Hello World!
+Hello World, AVG! 欢迎来到NaniNovel，Unity下的AVG引擎，现在开始演示。
+首先，除脚本外，所有资源的【主目录】都在Assets/Naninovel/Resources/Naninovel里面。
+
+# Script
+脚本应以.nani为扩展名，可以不放在【主目录】里。具体请参见本项目HelloAVG.nani放在哪里。
+脚本也可以在Unity的NaniNovel菜单里管理。
+以井号“#”开头的是注释，同时【也是】行标，可用于跳转。
+以圈号“@”开头的是脚本命令。
+当然，也有选项，比如：
+286工作室吼不吼呀？[skipInput]
+@choice "吼" goto:.Hou
+@choice "不吼" goto:.BuHou
+@stop
+# BuHou
+谁说不吼的，明明就——
+# Hou
+很吼！
+
+# Music
+现在播放音乐，音乐的默认目录是【主目录】/Audio，可在Unity菜单 NaniNovel -> Configuration 里改。
+具体来说，在 AudioLoader 里面。所以其他类型资源也有对应 Loader。
+@bgm Music/EverForever fade:1.0 loop:false
+
+# Background
+现在是背景，背景的默认目录是【主目录】/Backgrounds。
+现在是物理楼。
+@back PhyBuilding
+现在是营火。
+@back CampFire
+现在用RadiaBlur特效变回物理楼。
+@back PhyBuilding.RadialBlur
+另外，可以用video和Unity Scene（比如模拟经营的游戏Scene）做背景，非常强大！
+我创建了一个Monday ticket，大家可以自行探索。
+
+# Characters
+人物要复杂一些。
+
+
+好，我们就演示到这里，谢谢观看！
 @stop
