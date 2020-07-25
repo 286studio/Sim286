@@ -1,0 +1,9 @@
+# Start
+@back PhyBuilding
+@char GenericTest.Default
+Defaul
+@char GenericTest.Pose1 pos:25
+Pose1
+@char GenericTest.Pose2 pos:75,50
+Pose2
+@stop

@@ -1,3 +1,7 @@
+@choice "Generic Character demo" goto:GenericCharacterTest.Start
+@choice "继续" goto:.Start
+@stop
+
 # Start
 Hello World, AVG! 欢迎来到NaniNovel，Unity下的AVG引擎，现在开始演示。
 首先，除脚本外，所有资源的【主目录】都在Assets/Naninovel/Resources/Naninovel里面。

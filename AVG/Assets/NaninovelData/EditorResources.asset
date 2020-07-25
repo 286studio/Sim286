@@ -155,6 +155,9 @@ MonoBehaviour:
     - Name: HelloAVG
       PathPrefix: Scripts
       Guid: 98383ac5dcb46402d8e8731291187cc3
+    - Name: GenericCharacterTest
+      PathPrefix: Scripts
+      Guid: becb10d9badd9cb46b156661d159f6c7
   - Id: Backgrounds/5e8d038c-3243-48d3-9d45-2c1d5468d418
     Resources:
     - Name: PhyBuilding
@@ -178,3 +181,8 @@ MonoBehaviour:
     - Name: Music/EverForever
       PathPrefix: Audio
       Guid: 82de471d841174e7fa74e5b03ca4a641
+  - Id: Characters/04685bd4-a98a-4468-a8d0-0d6d1f615371
+    Resources:
+    - Name: GenericTest
+      PathPrefix: Characters
+      Guid: f4d6f4f184ece464a834e59151c1e5a7
