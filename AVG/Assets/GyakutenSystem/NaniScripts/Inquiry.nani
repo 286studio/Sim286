@@ -1,0 +1,39 @@
+
+欢迎来到叙事曲3询问系统，现在开始演示。
+询问开始...
+# Start
+@inquiryStart id:Inquiry count:5 hidden:4
+@testimony num:1
+@testimony num:2
+@testimony num:3
+@testimony num:4
+@testimony num:5
+@inquiryEnd
+他杠杠滴话里，好像并没有破绽。
+还是再思考一下吧...
+@goto Inquiry.Start
+@stop
+
+# Inquiry1
+证言1
+@stop
+
+# Inquiry2
+证言2
+@stop
+
+# Inquiry3
+证言3
+@stop
+
+# Inquiry4
+证言4
+@stop
+
+# Inquiry5
+证言5
+# END
+系主任被我怼的哑口无言。
+后面发生的事你们都知道了。
+（演示完毕）
+@stop

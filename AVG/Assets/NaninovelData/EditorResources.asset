@@ -158,6 +158,33 @@ MonoBehaviour:
     - Name: GenericCharacterTest
       PathPrefix: Scripts
       Guid: becb10d9badd9cb46b156661d159f6c7
+    - Name: Inquiry
+      PathPrefix: Scripts
+      Guid: d23a62db24dd296448629fe9b63ce4bd
+    - Name: FurnitureSystem
+      PathPrefix: Scripts
+      Guid: 39f479a1e63f18445ace8a8b15cf0b1b
+    - Name: Inquiry1_Mada
+      PathPrefix: Scripts
+      Guid: 97f6986c3831d45478a6c9f8a6733023
+    - Name: Inquiry2_Mada
+      PathPrefix: Scripts
+      Guid: ff1570f2faef6724ea65be25152b4fcb
+    - Name: Inquiry3_Mada
+      PathPrefix: Scripts
+      Guid: 81c040c033b1ee041b4b8e880acfb5ca
+    - Name: Inquiry4_Mada
+      PathPrefix: Scripts
+      Guid: 24ae098cb1d62e746a51f5fe7265a238
+    - Name: Inquiry5_Mada
+      PathPrefix: Scripts
+      Guid: fe25f06b9af843746bccd6138dbe5183
+    - Name: Inquiry_Igiari_Default
+      PathPrefix: Scripts
+      Guid: f4242c5193097ea40bbe31c4c11819ca
+    - Name: Inquiry4_Igiari1
+      PathPrefix: Scripts
+      Guid: 7714dad8e86d1604aa8e18f0afba712c
   - Id: Backgrounds/5e8d038c-3243-48d3-9d45-2c1d5468d418
     Resources:
     - Name: PhyBuilding

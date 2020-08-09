@@ -16,7 +16,6 @@ public class DesktopDecoration : Furniture
         if (t != null)
         {
             transform.position = FurnitureManager.CoordToWorldPosition(coord);
-            print(transform.position);
             if (t.CanStandOn(this))
             {
                 desktop = t.GetFurniture();
