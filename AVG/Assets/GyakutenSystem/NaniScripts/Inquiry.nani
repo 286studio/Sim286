@@ -3,7 +3,7 @@
 询问开始...
 # Start
 @inquiryStart id:Inquiry count:5 hidden:4
-@testimony num:1
+@testimony num:1 shatterable:true
 @testimony num:2
 @testimony num:3
 @testimony num:4
@@ -13,6 +13,7 @@
 还是再思考一下吧...
 @goto Inquiry.Start
 @stop
+; main script ends here
 
 # Inquiry1
 证言1
@@ -32,7 +33,7 @@
 
 # Inquiry5
 证言5
-# END
+# InquiryEND
 系主任被我怼的哑口无言。
 后面发生的事你们都知道了。
 （演示完毕）

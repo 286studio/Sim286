@@ -10,6 +10,11 @@ using UnityEditor.U2D.Path;
 using System.IO;
 using System.Xml.Serialization;
 
+public enum GyakutenState
+{
+    None,
+    ShatteredTestimony,
+}
 public class GyakutenManager : MonoBehaviour
 {
     public static GyakutenManager ins;
@@ -26,6 +31,7 @@ public class GyakutenManager : MonoBehaviour
     public static Dictionary<string, HashSet<int>> unlockTestimonies = new Dictionary<string, HashSet<int>>();
     GameObject backpack;
     public static bool success;
+    public static GyakutenState state = GyakutenState.None;
     private void Awake()
     {
         ins = this;
@@ -44,6 +50,14 @@ public class GyakutenManager : MonoBehaviour
         next.onClick.AddListener(NextTestimony);
         inquiry.onClick.AddListener(Mada);
         evidence.onClick.AddListener(Igiari);
+    }
+    private void Update()
+    {
+        switch (state)
+        {
+            case GyakutenState.ShatteredTestimony: Update_ShatteredTestimony(); break;
+            default: break;
+        }
     }
     public static void ShowInquiryOptions(bool shown)
     {
@@ -109,13 +123,23 @@ public class GyakutenManager : MonoBehaviour
     void ReturnFromIgiari(Script igiariScript)
     {
         player.OnStop -= ReturnFromIgiari;
-        if (success) player.PreloadAndPlayAsync(scriptFile, label: "END");
+        if (success) player.PreloadAndPlayAsync(scriptFile, label: inquiryName + "END");
         else
         {
             ShowInquiryOptions(true);
             Engine.GetService<IInputManager>().ProcessInput = false;
             player.PreloadAndPlayAsync(scriptFile, inquiryCurrentLineIdx);
         }
+    }
+    public static void Start_ShatteredTestimony()
+    {
+        Engine.GetService<IInputManager>().ProcessInput = false;
+        player.Stop();
+        Engine.GetService<IStateManager>().ResetStateAsync();
+    }
+    void Update_ShatteredTestimony()
+    {
+
     }
 }
 
@@ -164,8 +188,10 @@ public class InquiryEnd : Command
 public class Testimony : Command
 {
     public IntegerParameter num;
+    public BooleanParameter shatterable;
     public override UniTask ExecuteAsync(CancellationToken cancellationToken = default)
     {
+        if (!Assigned(shatterable)) shatterable = false;
         Goto gtCmd = new Goto();
         gtCmd.Path = new NamedString(GyakutenManager.player.PlayedScript.name, GyakutenManager.inquiryName + num.ToString());
         return gtCmd.ExecuteAsync(cancellationToken);
