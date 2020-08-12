@@ -3,7 +3,7 @@
 询问开始...
 # Start
 @inquiryStart id:Inquiry count:5 hidden:4
-@testimony num:1 shatterable:true
+@testimony num:1
 @testimony num:2
 @testimony num:3
 @testimony num:4

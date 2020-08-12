@@ -9,11 +9,31 @@ using System.Threading;
 using UnityEditor.U2D.Path;
 using System.IO;
 using System.Xml.Serialization;
+using System.Linq;
 
 public enum GyakutenState
 {
     None,
     ShatteredTestimony,
+}
+public class TestimonyData
+{
+    public string inquiryName { private set; get; }
+    public int lineIdx { private set; get; }
+    public bool hidden = false;
+    public bool unlocked = false;
+    public bool shattered = false;
+
+    public TestimonyData(string _inquiryName, int _lineIdx)
+    {
+        inquiryName = _inquiryName;
+        lineIdx = _lineIdx;
+    }
+    public bool IsReallyHidden()
+    {
+        if (hidden && !unlocked) return true;
+        return false;
+    }
 }
 public class GyakutenManager : MonoBehaviour
 {
@@ -24,11 +44,9 @@ public class GyakutenManager : MonoBehaviour
     [SerializeField] GameObject backpackPrefab;
     public static string inquiryName;
     public static IScriptPlayer player;
-    public static int inquiryStartLineIdx;
-    public static int inquiryCurrentLineIdx;
+    public static int cur;
     public static string scriptFile;
-    public static List<int> hiddenTestimonies = new List<int>();
-    public static Dictionary<string, HashSet<int>> unlockTestimonies = new Dictionary<string, HashSet<int>>();
+    public static TestimonyData[] testimonies = null;
     GameObject backpack;
     public static bool success;
     public static GyakutenState state = GyakutenState.None;
@@ -65,21 +83,23 @@ public class GyakutenManager : MonoBehaviour
     }
     void PrevTestimony()
     {
-        if (inquiryCurrentLineIdx > inquiryStartLineIdx)
+        if (cur > 0)
         {
-            do --inquiryCurrentLineIdx; while (hiddenTestimonies.Contains(inquiryCurrentLineIdx - inquiryStartLineIdx + 1)) ;
-            player.PreloadAndPlayAsync(scriptFile, inquiryCurrentLineIdx);
+            do --cur; while (testimonies[cur].IsReallyHidden());
+            player.PreloadAndPlayAsync(scriptFile, testimonies[cur].lineIdx);
         }
     }
     void NextTestimony()
     {
-        do ++inquiryCurrentLineIdx; while (hiddenTestimonies.Contains(inquiryCurrentLineIdx - inquiryStartLineIdx + 1));
-        player.PreloadAndPlayAsync(scriptFile, inquiryCurrentLineIdx);
+        do ++cur; while (cur < testimonies.Length && testimonies[cur].IsReallyHidden());
+        if (cur >= testimonies.Length)
+            player.PreloadAndPlayAsync(scriptFile, testimonies[testimonies.Length - 1].lineIdx + 1);
+        else
+            player.PreloadAndPlayAsync(scriptFile, testimonies[cur].lineIdx);
     }
     void Mada()
     {
-        int testimonyNum = inquiryCurrentLineIdx - inquiryStartLineIdx + 1;
-        player.PreloadAndPlayAsync(inquiryName + testimonyNum + "_Mada");
+        player.PreloadAndPlayAsync(inquiryName + (cur + 1) + "_Mada");
         ShowInquiryOptions(false);
         Engine.GetService<IInputManager>().ProcessInput = true;
         player.OnStop += ReturnFromMada;
@@ -98,7 +118,7 @@ public class GyakutenManager : MonoBehaviour
     }
     public void IgiariDiag(int evidenceNum)
     {
-        int testimonyNum = inquiryCurrentLineIdx - inquiryStartLineIdx + 1;
+        int testimonyNum = cur + 1;
         string[] filenames =
         {
             inquiryName + testimonyNum + "_Igiari" + evidenceNum,
@@ -128,7 +148,7 @@ public class GyakutenManager : MonoBehaviour
         {
             ShowInquiryOptions(true);
             Engine.GetService<IInputManager>().ProcessInput = false;
-            player.PreloadAndPlayAsync(scriptFile, inquiryCurrentLineIdx);
+            player.PreloadAndPlayAsync(scriptFile, testimonies[cur].lineIdx);
         }
     }
     public static void Start_ShatteredTestimony()
@@ -152,18 +172,25 @@ public class InquiryStart : Command
     public IntegerListParameter hidden;
     public override UniTask ExecuteAsync(CancellationToken cancellationToken = default)
     {
+        // inquiryName is unique to each inquiry
         if (Assigned(id))
         {
-            GyakutenManager.inquiryName = id;
-            if (!GyakutenManager.unlockTestimonies.ContainsKey(id)) GyakutenManager.unlockTestimonies.Add(id, new HashSet<int>());
+            if (GyakutenManager.inquiryName != id)
+            {
+                GyakutenManager.testimonies = new TestimonyData[count];
+                for (int i = 0; i < count; ++i)
+                {
+                    GyakutenManager.testimonies[i] = new TestimonyData(id, PlaybackSpot.LineIndex + 1 + i);
+                    if (Assigned(hidden)) foreach (int? d in hidden) if (d == i + 1) { GyakutenManager.testimonies[i].hidden = true; break; }
+                }
+                GyakutenManager.inquiryName = id;
+                GyakutenManager.scriptFile = GyakutenManager.player.PlayedScript.name; // remember the current script file
+                GyakutenManager.success = false; // reset success
+            }
         }
         else GyakutenManager.inquiryName = "";
-        GyakutenManager.success = false;
-        GyakutenManager.ShowInquiryOptions(true);
-        GyakutenManager.inquiryCurrentLineIdx = GyakutenManager.inquiryStartLineIdx = PlaybackSpot.LineIndex + 1;
-        GyakutenManager.scriptFile = GyakutenManager.player.PlayedScript.name;
-        GyakutenManager.hiddenTestimonies.Clear();
-        foreach (var i in hidden) if (i != null && !GyakutenManager.unlockTestimonies[id].Contains(i)) GyakutenManager.hiddenTestimonies.Add(i);
+        GyakutenManager.cur = 0;
+        GyakutenManager.ShowInquiryOptions(true); // show inquiry interface
         Engine.GetService<IInputManager>().ProcessInput = false;
         return UniTask.CompletedTask;
     }
@@ -176,9 +203,6 @@ public class InquiryEnd : Command
     {
         Debug.Log("InquiryEnd");
         GyakutenManager.ShowInquiryOptions(false);
-        GyakutenManager.inquiryName = "";
-        GyakutenManager.inquiryStartLineIdx = -1;
-        GyakutenManager.inquiryCurrentLineIdx = -1;
         Engine.GetService<IInputManager>().ProcessInput = true;
         return UniTask.CompletedTask;
     }
@@ -204,22 +228,7 @@ public class UnlockTestimony : Command
     public IntegerParameter num;
     public override UniTask ExecuteAsync(CancellationToken cancellationToken = default)
     {
-        HashSet<int> val;
-        if (GyakutenManager.unlockTestimonies.TryGetValue(GyakutenManager.inquiryName, out val))
-        {
-            if (val != null) val.Add(num);
-            else
-            {
-                val = new HashSet<int>();
-                val.Add(num);
-            }
-        }
-        else
-        {
-            GyakutenManager.unlockTestimonies.Add(GyakutenManager.inquiryName, new HashSet<int>());
-            GyakutenManager.unlockTestimonies[GyakutenManager.inquiryName].Add(num);
-        }
-        if (GyakutenManager.inquiryName == id) GyakutenManager.hiddenTestimonies.Remove(num);
+        GyakutenManager.testimonies[num - 1].unlocked = true;
         return UniTask.CompletedTask;
     }
 }
