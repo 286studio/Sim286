@@ -1,8 +1,44 @@
 
-欢迎来到叙事曲3询问系统，现在开始演示。
-询问开始...
+@goto Inquiry.MainPlot
+Zhuchiren: 理学院2000年度SAR项目终期审核，现在开始。
+@printer  visible:false
+@back 学术报告厅加小人
+@sfx 掌声2
+Zhuchiren: 首先，有请第一组“皮亚诺公理体系的等效性研究”项目负责人，数学系潘承洞老师！
+@printer  visible:true
+不知为何，今天来了很多其他学院的学生。
+面对本学院很有名的老师，同学们也只是礼节性地鼓了鼓掌。
+“明美不会来了，我一个人真的可以么？”
+这个念头一出，面对台上侃侃而谈的老师，心中忽然产生了强烈的动摇……
+@printer  visible:false
+@back empty time:1
+如果明美在的话……
+@printer  visible:true
+@printer  visible:false
+@back m5开题报告1
+一个多月以前，她在台上的样子，历历在目。
+@printer  visible:true
+镇定自若的解说……
+光彩照人的笑容……
+和她相比，我一下子对自己，完全失去了信心。
+“明美不在，也许我什么也做不出来。”
+心里这样想着。
+如果不是靠着诸葛师兄留下来的……
+# MainPlot
+@back 学术报告厅加小人
+Zhuchiren: 下面，有请第三组“狭义相对论视觉化”！
+Suo: 我是……
+@printer  visible:false
+@spawn Mada
+@wait 1
+@back 学术报告厅反打
+Xizhuren: 等一下！
+@printer  visible:true
+Xizhuren: 你们的报告，不符合要求。
+@zhuijiukaishi text:~不符合要求的理由~
+@back 学术报告厅反打放大
 # Start
-@inquiryStart id:Inquiry count:5 hidden:4
+@inquiryStart id:Inquiry count:5 hidden:2,4
 @testimony num:1
 @testimony num:2
 @testimony num:3
@@ -16,15 +52,15 @@
 ; main script ends here
 
 # Inquiry1
-证言1
+Xizhuren: 最近，有关这个项目组的某位前成员——
 @stop
 
 # Inquiry2
-证言2
+Xizhuren: 某位前成员指的当然就是诸葛瑾瑜，
 @stop
 
 # Inquiry3
-证言3
+Xizhuren: 校论坛上有一些不好的谣言，说校方嫉贤妒能，迫害良才。
 @stop
 
 # Inquiry4

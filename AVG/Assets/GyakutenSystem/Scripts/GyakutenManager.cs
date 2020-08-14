@@ -10,19 +10,14 @@ using UnityEditor.U2D.Path;
 using System.IO;
 using System.Xml.Serialization;
 using System.Linq;
+using Coffee.UIExtensions;
 
-public enum GyakutenState
-{
-    None,
-    ShatteredTestimony,
-}
 public class TestimonyData
 {
     public string inquiryName { private set; get; }
     public int lineIdx { private set; get; }
     public bool hidden = false;
     public bool unlocked = false;
-    public bool shattered = false;
 
     public TestimonyData(string _inquiryName, int _lineIdx)
     {
@@ -38,6 +33,8 @@ public class TestimonyData
 public class GyakutenManager : MonoBehaviour
 {
     public static GyakutenManager ins;
+    public static int spawnCount;
+    [SerializeField] Camera cam;
     [SerializeField] Button prev, next;
     [SerializeField] Button inquiry, evidence;
     public Evidence[] evidences;
@@ -49,7 +46,6 @@ public class GyakutenManager : MonoBehaviour
     public static TestimonyData[] testimonies = null;
     GameObject backpack;
     public static bool success;
-    public static GyakutenState state = GyakutenState.None;
     private void Awake()
     {
         ins = this;
@@ -69,14 +65,6 @@ public class GyakutenManager : MonoBehaviour
         inquiry.onClick.AddListener(Mada);
         evidence.onClick.AddListener(Igiari);
     }
-    private void Update()
-    {
-        switch (state)
-        {
-            case GyakutenState.ShatteredTestimony: Update_ShatteredTestimony(); break;
-            default: break;
-        }
-    }
     public static void ShowInquiryOptions(bool shown)
     {
         ins.gameObject.SetActive(shown);
@@ -89,7 +77,7 @@ public class GyakutenManager : MonoBehaviour
             player.PreloadAndPlayAsync(scriptFile, testimonies[cur].lineIdx);
         }
     }
-    void NextTestimony()
+    public void NextTestimony()
     {
         do ++cur; while (cur < testimonies.Length && testimonies[cur].IsReallyHidden());
         if (cur >= testimonies.Length)
@@ -99,17 +87,9 @@ public class GyakutenManager : MonoBehaviour
     }
     void Mada()
     {
-        player.PreloadAndPlayAsync(inquiryName + (cur + 1) + "_Mada");
         ShowInquiryOptions(false);
+        player.PreloadAndPlayAsync(inquiryName + (cur + 1) + "_Mada");
         Engine.GetService<IInputManager>().ProcessInput = true;
-        player.OnStop += ReturnFromMada;
-    }
-    void ReturnFromMada(Script madaScript)
-    {
-        player.OnStop -= ReturnFromMada;
-        ShowInquiryOptions(true);
-        Engine.GetService<IInputManager>().ProcessInput = false;
-        NextTestimony();
     }
     void Igiari()
     {
@@ -138,28 +118,6 @@ public class GyakutenManager : MonoBehaviour
         player.PreloadAndPlayAsync(filename);
         ShowInquiryOptions(false);
         Engine.GetService<IInputManager>().ProcessInput = true;
-        player.OnStop += ReturnFromIgiari;
-    }
-    void ReturnFromIgiari(Script igiariScript)
-    {
-        player.OnStop -= ReturnFromIgiari;
-        if (success) player.PreloadAndPlayAsync(scriptFile, label: inquiryName + "END");
-        else
-        {
-            ShowInquiryOptions(true);
-            Engine.GetService<IInputManager>().ProcessInput = false;
-            player.PreloadAndPlayAsync(scriptFile, testimonies[cur].lineIdx);
-        }
-    }
-    public static void Start_ShatteredTestimony()
-    {
-        Engine.GetService<IInputManager>().ProcessInput = false;
-        player.Stop();
-        Engine.GetService<IStateManager>().ResetStateAsync();
-    }
-    void Update_ShatteredTestimony()
-    {
-
     }
 }
 
@@ -212,10 +170,8 @@ public class InquiryEnd : Command
 public class Testimony : Command
 {
     public IntegerParameter num;
-    public BooleanParameter shatterable;
     public override UniTask ExecuteAsync(CancellationToken cancellationToken = default)
     {
-        if (!Assigned(shatterable)) shatterable = false;
         Goto gtCmd = new Goto();
         gtCmd.Path = new NamedString(GyakutenManager.player.PlayedScript.name, GyakutenManager.inquiryName + num.ToString());
         return gtCmd.ExecuteAsync(cancellationToken);
@@ -240,5 +196,59 @@ public class InquirySuccess : Command
     {
         GyakutenManager.success = true;
         return UniTask.CompletedTask;
+    }
+}
+
+[CommandAlias("StopMada")]
+public class StopMada : Command
+{
+    public override UniTask ExecuteAsync(CancellationToken cancellationToken = default)
+    {
+        GyakutenManager.ShowInquiryOptions(true);
+        Engine.GetService<IInputManager>().ProcessInput = false;
+        GyakutenManager.ins.NextTestimony();
+        return UniTask.CompletedTask;
+    }
+}
+
+[CommandAlias("StopIgiari")]
+public class StopIgiari : Command
+{
+    public override UniTask ExecuteAsync(CancellationToken cancellationToken = default)
+    {
+        if (GyakutenManager.success) GyakutenManager.player.PreloadAndPlayAsync(GyakutenManager.scriptFile, label: GyakutenManager.inquiryName + "END");
+        else
+        {
+            GyakutenManager.ShowInquiryOptions(true);
+            Engine.GetService<IInputManager>().ProcessInput = false;
+            GyakutenManager.player.PreloadAndPlayAsync(GyakutenManager.scriptFile, GyakutenManager.testimonies[GyakutenManager.cur].lineIdx);
+        }
+        return UniTask.CompletedTask;
+    }
+}
+
+[CommandAlias("Zhuijiukaishi")]
+public class Zhuijiukaishi : Command
+{
+    public StringParameter Text;
+    public override async UniTask ExecuteAsync(CancellationToken cancellationToken = default)
+    {
+        PrintText ptCmd = new PrintText();
+        ptCmd.Text = Text;
+        ptCmd.WaitForInput = false;
+        Wait waitCmd = new Wait();
+        waitCmd.WaitMode = Object.Instantiate(Resources.Load<GameObject>("Zhuijiukaishi"), GameObject.Find("Canvas").transform).GetComponent<DestroyInSecond>().destroyInSecond.ToString();
+        await ptCmd.ExecuteAsync();
+        await waitCmd.ExecuteAsync();
+    }
+}
+
+[CommandAlias("GyakutenSpawn")]
+public class GyakutenSpawn : Spawn
+{
+    public override async UniTask ExecuteAsync(CancellationToken cancellationToken = default)
+    {
+        Path += "#" + ++GyakutenManager.spawnCount;
+        await base.ExecuteAsync();
     }
 }

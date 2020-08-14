@@ -100,6 +100,12 @@ MonoBehaviour:
     - Name: SunShafts
       PathPrefix: Spawn
       Guid: c4bf810b9b6cc9f44a58fd670678ded4
+    - Name: Mada
+      PathPrefix: Spawn
+      Guid: 4bdcf4c0a5ba3854ea4d1368e981ec1d
+    - Name: Igiari
+      PathPrefix: Spawn
+      Guid: 15a85a218f6972c4a9d80c0e2454db32
   - Id: UI
     Resources:
     - Name: ClickThroughPanel
@@ -193,6 +199,18 @@ MonoBehaviour:
     - Name: CampFire
       PathPrefix: Backgrounds/MainBackground
       Guid: 1a19c9ed263de455fbef83313428fa48
+    - Name: "\u5B66\u672F\u62A5\u544A\u5385\u52A0\u5C0F\u4EBA"
+      PathPrefix: Backgrounds/MainBackground
+      Guid: 889db9fdf9840c84996922e27ca904e8
+    - Name: empty
+      PathPrefix: Backgrounds/MainBackground
+      Guid: 
+    - Name: "m5\u5F00\u9898\u62A5\u544A1"
+      PathPrefix: Backgrounds/MainBackground
+      Guid: 463e66bcb3e087943908652dcbca47ed
+    - Name: "\u5B66\u672F\u62A5\u544A\u5385\u53CD\u6253"
+      PathPrefix: Backgrounds/MainBackground
+      Guid: 35ad4936d63f71745b4b0eefc1982ae7
   - Id: Characters/4fd120a7-1ef8-4f86-a189-338dbcbce878
     Resources:
     - Name: Default
@@ -208,8 +226,20 @@ MonoBehaviour:
     - Name: Music/EverForever
       PathPrefix: Audio
       Guid: 82de471d841174e7fa74e5b03ca4a641
+    - Name: "\u638C\u58F02"
+      PathPrefix: Audio
+      Guid: bef22e9a7a00efd4db9a87cf527dd223
   - Id: Characters/04685bd4-a98a-4468-a8d0-0d6d1f615371
     Resources:
     - Name: GenericTest
       PathPrefix: Characters
       Guid: f4d6f4f184ece464a834e59151c1e5a7
+  - Id: Characters/cd0850c6-63cd-43fe-95e9-d9dc1c2d2266
+    Resources:
+    - Name: Zhuchiren
+      PathPrefix: Characters/Zhuchiren
+      Guid: 
+  - Id: Characters/544451b6-c1e3-441e-b16e-b56237b8eb48
+    Resources: []
+  - Id: Characters/f9860113-eebd-49bc-b994-62ab6c1a3eba
+    Resources: []
