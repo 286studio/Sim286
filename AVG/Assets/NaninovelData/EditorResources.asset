@@ -211,6 +211,9 @@ MonoBehaviour:
     - Name: "\u5B66\u672F\u62A5\u544A\u5385\u53CD\u6253"
       PathPrefix: Backgrounds/MainBackground
       Guid: 35ad4936d63f71745b4b0eefc1982ae7
+    - Name: "\u5B66\u672F\u62A5\u544A\u5385\u53CD\u6253\u653E\u5927"
+      PathPrefix: Backgrounds/MainBackground
+      Guid: e1335d25dd6303b46a009c9e61bb719a
   - Id: Characters/4fd120a7-1ef8-4f86-a189-338dbcbce878
     Resources:
     - Name: Default

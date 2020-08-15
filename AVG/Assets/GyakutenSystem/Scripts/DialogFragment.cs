@@ -21,6 +21,8 @@ public class DialogFragment : MonoBehaviour
     [SerializeField] Vector3[] endPos;
     Quaternion[] endRot;
     bool[] hasLabel;
+    Graphic[] gs;
+    float[] initAlpha;
     private void Awake()
     {
         if (!ins) ins = this;
@@ -30,6 +32,11 @@ public class DialogFragment : MonoBehaviour
     void Start()
     {
         (remainTime.transform as RectTransform).anchoredPosition = new Vector2(0, Screen.height / 2 - 50);
+
+        gs = GetComponentsInChildren<Graphic>();
+        initAlpha = new float[gs.Length];
+        for (int i = 0; i < gs.Length; ++i) initAlpha[i] = gs[i].color.a;
+
         rt = transform as RectTransform;
         endPos = new Vector3[pieces.Length];
         endRot = new Quaternion[pieces.Length];
@@ -110,6 +117,48 @@ public class DialogFragment : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    IEnumerator FadeOut()
+    {
+        float step = 1 / 30f;
+        for (float i = 0; i < .5f; i += step)
+        {
+            for (int j = 0; j < gs.Length; ++j)
+            {
+                Color c = gs[j].color;
+                c.a = (1 - i / 0.5f) * initAlpha[j];
+                gs[j].color = c;
+            }
+            yield return new WaitForSeconds(step);
+        }
+        gameObject.SetActive(false);
+    }
+
+    IEnumerator FadeIn()
+    {
+        float step = 1 / 30f;
+        for (float i = 0; i < .5f; i += step)
+        {
+            for (int j = 0; j < gs.Length; ++j)
+            {
+                Color c = gs[j].color;
+                c.a = i / 0.5f * initAlpha[j];
+                gs[j].color = c;
+            }
+            yield return new WaitForSeconds(step);
+        }
+        for (int j = 0; j < gs.Length; ++j)
+        {
+            Color c = gs[j].color;
+            c.a = initAlpha[j];
+            gs[j].color = c;
+        }
+    }
+    public static void Fade(bool fadeIn)
+    {
+        if (fadeIn) ins.gameObject.SetActive(true);
+        ins.StartCoroutine(fadeIn ? ins.FadeIn() : ins.FadeOut());
+    }
 }
 
 // **************************** NEW COMMAND HERE ****************************
@@ -137,7 +186,10 @@ public class BreakWords : Command
         wtcmd.WaitMode = "2.0";
         await wtcmd.ExecuteAsync();
 
-        DialogFragment.ins.gameObject.SetActive(false);
+        DialogFragment.Fade(false);
+        wtcmd = new Wait();
+        wtcmd.WaitMode = "0.5";
+        await wtcmd.ExecuteAsync();
 
         PrintText ptcmd = new PrintText();
         ptcmd.AuthorId = author;
@@ -146,12 +198,12 @@ public class BreakWords : Command
         await ptcmd.ExecuteAsync();
 
         wtcmd = new Wait();
-        wtcmd.WaitMode = "1.5";
+        wtcmd.WaitMode = "2.0";
         await wtcmd.ExecuteAsync();
 
         HidePrinter hptcmd = new HidePrinter();
         await hptcmd.ExecuteAsync();
-        DialogFragment.ins.gameObject.SetActive(true);
+        DialogFragment.Fade(true);
         DialogFragment.ready = true;
         Engine.GetService<IInputManager>().ProcessInput = true;
 
