@@ -106,6 +106,12 @@ MonoBehaviour:
     - Name: Igiari
       PathPrefix: Spawn
       Guid: 15a85a218f6972c4a9d80c0e2454db32
+    - Name: Yipaihuyan
+      PathPrefix: Spawn
+      Guid: 2cc550824e645214c92479d7373828b1
+    - Name: Dazhu
+      PathPrefix: Spawn
+      Guid: 8b9b614663ac60a4f9d2c9116e0ffd7d
   - Id: UI
     Resources:
     - Name: ClickThroughPanel
@@ -188,7 +194,7 @@ MonoBehaviour:
     - Name: Inquiry_Igiari_Default
       PathPrefix: Scripts
       Guid: f4242c5193097ea40bbe31c4c11819ca
-    - Name: Inquiry4_Igiari1
+    - Name: Inquiry3_Igiari1
       PathPrefix: Scripts
       Guid: 7714dad8e86d1604aa8e18f0afba712c
   - Id: Backgrounds/5e8d038c-3243-48d3-9d45-2c1d5468d418
@@ -214,6 +220,9 @@ MonoBehaviour:
     - Name: "\u5B66\u672F\u62A5\u544A\u5385\u53CD\u6253\u653E\u5927"
       PathPrefix: Backgrounds/MainBackground
       Guid: e1335d25dd6303b46a009c9e61bb719a
+    - Name: "\u7EC8\u5BA1\u62A5\u544A\u7B2C\u4E00\u9875"
+      PathPrefix: Backgrounds/MainBackground
+      Guid: aeef0d1bedafad6489b48f50b9c0cd77
   - Id: Characters/4fd120a7-1ef8-4f86-a189-338dbcbce878
     Resources:
     - Name: Default

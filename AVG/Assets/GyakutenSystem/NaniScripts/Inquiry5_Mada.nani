@@ -1,7 +1,11 @@
 
-对证言5提出质问！
-证言5好像没什么问题。
-难道是我想错了吗！
-再仔细思考一下吧……
-
+@printer  visible:false
+@gyakutenSpawn Mada
+@wait 1
+Suo: 等……
+@printer  visible:false
+@gyakutenSpawn Yipaihuyan
+@wait 1
+Xizhuren: 不接受异议！
+Suo: ……
 @stopMada

@@ -1,6 +1,49 @@
 
-对证言2提出质问！
-证言2好像没什么问题。
-难道是我想错了吗！
-再仔细思考一下吧……
+@printer  visible:false
+@gyakutenSpawn Mada
+@breakWords id:i1m1 segments:这个,项目组,的,某位,前成员,7年前,就得,出来,了吧？—— timeLimit:10 author:Xizhuren words:那么请问，宇文朔同学，我的话是哪里有问题呢？
+Xizhuren: 哼！虚张声势。
+@goto Inquiry2_Mada.END
+# i1m1_1
+# i1m1_3
+# i1m1_7
+# i1m1_8
+# i1m1_9
+@goto Inquiry2_Mada.default
+# i1m1_2
+Suo: 这个项目是指哪个项目组？
+Xizhuren: 就你这个连自己在哪个项目组都不知道的愣头青，
+Xizhuren: （顿）
+Xizhuren: 还想推翻爱因斯坦？
+# default
+Suo: 嗯……这个……那个……
+Xizhuren: 如果要说没有根据的话就算造谣！你知道后果的吧！
+@goto Inquiry2_Mada.END
+# i1m1_4
+# i1m1_5
+Suo: 请问某位前成员是……？
+Xizhuren: 当然是诸葛瑾瑜。
+Suo: （……前成员？）
+Suo: （这老头好像搞错了什么。）
+Suo: （这个可以作为线索。）
+@unlockTestimony id:Inquiry num:3
+# END
+Suo: 嗯……你……您说的话没有问题！绝对正确！
+Xizhuren: 哼！
+@stopMada
+# i1m1_6
+Suo: 7年前，某位天才少年做到了比我更好的结果，
+Suo: 不幸的是，他的发现没有被校方重视，反而受到校方的迫害！
+@printer  visible:false
+@gyakutenSpawn Dazhu
+@breakWordsAuto id:zabc segments:不幸,的是，,他的发现,没有,被校方重视,，反而,受到,校方的迫害！ timeLimit:10 select:8
+@gyakutenSpawn Yipaihuyan
+@wait 1
+Xizhuren: 关于此事，最近校论坛上有一些不好的谣言，说校方嫉贤妒能，迫害良才。
+会场“嗡”一下，充满了议论声。
+Xizhuren: 这些谣言，极大干扰了教学秩序，所以——
+Xizhuren: 从现在起，再有造谣传谣者，一律严肃处理、绝不姑息！
+Xizhuren: 宇文同学，你该不会是想往枪口上撞吧？
+Suo: ……（想在还不是和他硬碰硬的时候）
+Xizhuren: 哼！
 @stopMada

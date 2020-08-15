@@ -23,6 +23,8 @@ public class DialogFragment : MonoBehaviour
     bool[] hasLabel;
     Graphic[] gs;
     float[] initAlpha;
+    public static GameObject targetCursor = null;
+    int autoMode;
     private void Awake()
     {
         if (!ins) ins = this;
@@ -48,6 +50,14 @@ public class DialogFragment : MonoBehaviour
             endRot[i] = Quaternion.Euler(0, 0, Random.Range(0, 360));
         }
         StartCoroutine(Breaking());
+    }
+
+    private void Update()
+    {
+        if (targetCursor)
+        {
+            if (autoMode < 0) (targetCursor.transform as RectTransform).anchoredPosition = Input.mousePosition - new Vector3(Screen.width / 2, Screen.height / 2);
+        }
     }
 
     IEnumerator Breaking()
@@ -86,10 +96,12 @@ public class DialogFragment : MonoBehaviour
     {
         ins.StartCoroutine(ins.TimeBar(time));
     }
-
-    public DialogFragment Initialize(string[] seg)
+    public Button[] buttons;
+    public DialogFragment Initialize(string[] seg, int _autoMode = -1)
     {
+        autoMode = _autoMode;
         hasLabel = new bool[pieces.Length];
+        buttons = new Button[pieces.Length];
         List<int> randInt = new List<int>();
         for (int i = 0; i < 10; ++i) randInt.Add(i);
         randInt = randInt.OrderBy(a => Random.Range(0, 10)).ToList();
@@ -102,18 +114,19 @@ public class DialogFragment : MonoBehaviour
             hasLabel[i] = true;
             int local_i = i;
             wf.button.onClick.AddListener(delegate { SelectFragment(local_i); });
+            buttons[i] = wf.button;
         }
         return this;
     }
 
     void SelectFragment(int idx)
     {
-        print("Select Frag " + idx);
         if (ready && hasLabel[idx])
         {
             string _label = currentId + "_" + (idx + 1);
-            print("Go to " + currentFile + "." + _label);
             GyakutenManager.player.PreloadAndPlayAsync(currentFile, label: _label);
+            Cursor.visible = true;
+            if (targetCursor) Destroy(targetCursor);
             Destroy(gameObject);
         }
     }
@@ -158,6 +171,18 @@ public class DialogFragment : MonoBehaviour
     {
         if (fadeIn) ins.gameObject.SetActive(true);
         ins.StartCoroutine(fadeIn ? ins.FadeIn() : ins.FadeOut());
+    }
+
+    public IEnumerator CursorMoveTo(int idx)
+    {
+        float step = 1 / 30f;
+        Vector3 start = targetCursor.transform.position;
+        for (float i = 0; i < 2f; i += step)
+        {
+            targetCursor.transform.position = Vector3.Lerp(start, buttons[idx].transform.position, i / .6f);
+            yield return new WaitForSeconds(step);
+        }
+        targetCursor.transform.position = buttons[idx].transform.position;
     }
 }
 
@@ -205,12 +230,60 @@ public class BreakWords : Command
         await hptcmd.ExecuteAsync();
         DialogFragment.Fade(true);
         DialogFragment.ready = true;
+        DialogFragment.targetCursor = Object.Instantiate(Resources.Load<GameObject>("TargetCursor"), GameObject.Find("Canvas").transform);
+        Cursor.visible = false;
         Engine.GetService<IInputManager>().ProcessInput = true;
 
         wtcmd = new Wait();
         wtcmd.WaitMode = timeLimit.ToString();
         DialogFragment.StartCountdown(timeLimit);
         await wtcmd.ExecuteAsync();
-        if (DialogFragment.ins) Object.Destroy(DialogFragment.ins.gameObject);
+        if (id == DialogFragment.currentId)
+        {
+            if (DialogFragment.ins) Object.Destroy(DialogFragment.ins.gameObject);
+            if (DialogFragment.targetCursor) Object.Destroy(DialogFragment.targetCursor);
+            Cursor.visible = true;
+        }
+    }
+}
+
+[CommandAlias("BreakWordsAuto")]
+public class BreakWordsAuto : Command
+{
+    public StringParameter id;
+    public StringListParameter segments;
+    public DecimalParameter timeLimit;
+    public IntegerParameter select;
+    public async override UniTask ExecuteAsync(CancellationToken cancellationToken = default)
+    {
+        Cursor.visible = false;
+        DialogFragment.ready = false;
+        Engine.GetService<IInputManager>().ProcessInput = false;
+        var player = Engine.GetService<IScriptPlayer>();
+        if (id != DialogFragment.currentId)
+        {
+            DialogFragment.currentId = id;
+            DialogFragment.currentFile = player.PlayedScript.Name;
+        }
+        Object.Instantiate(Resources.Load<GameObject>("DialogFragment1"), GameObject.Find("Canvas").transform).GetComponent<DialogFragment>().Initialize(segments, select);
+
+        Wait wtcmd = new Wait();
+        wtcmd.WaitMode = "3.0";
+        await wtcmd.ExecuteAsync();
+
+        DialogFragment.targetCursor = Object.Instantiate(Resources.Load<GameObject>("TargetCursor"), GameObject.Find("Canvas").transform);
+        DialogFragment.ins.StartCoroutine(DialogFragment.ins.CursorMoveTo(select - 1));
+
+        wtcmd = new Wait();
+        wtcmd.WaitMode = "2.5";
+        await wtcmd.ExecuteAsync();
+
+        Engine.GetService<IInputManager>().ProcessInput = true;
+        if (id == DialogFragment.currentId)
+        {
+            if (DialogFragment.ins) Object.Destroy(DialogFragment.ins.gameObject);
+            if (DialogFragment.targetCursor) Object.Destroy(DialogFragment.targetCursor);
+            Cursor.visible = true;
+        }
     }
 }

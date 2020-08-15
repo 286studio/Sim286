@@ -1,36 +1,9 @@
 
 @printer  visible:false
 @gyakutenSpawn Mada
-@breakWords id:i1m1 segments:最近，,有关,这个项目组,的,某位,前成员—— timeLimit:10 author:Xizhuren words:那么请问，宇文朔同学，我的话是哪里有问题呢？
-Xizhuren: 哼！虚张声势。
-@goto Inquiry1_Mada.END
-# i1m1_1
-Suo: 你说最近？
-Xizhuren: （沉默）
-@goto Inquiry1_Mada.default
-# i1m1_2
-@goto Inquiry1_Mada.default
-# i1m1_3
-Suo: 这个项目是指哪个项目组？
-Xizhuren: 就你这个连自己在哪个项目组都不知道的愣头青，
-Xizhuren: （顿）
-Xizhuren: 还想推翻爱因斯坦？
-@goto Inquiry1_Mada.default
-# i1m1_4
-# default
-Suo: 嗯……这个……那个……
-Xizhuren: 如果要说没有根据的话就算造谣！你知道后果的吧！
-@goto Inquiry1_Mada.END
-# i1m1_5
-# i1m1_6
-Suo: 请问某位前成员是……？
-Xizhuren: 当然是诸葛瑾瑜。
-Suo: （……前成员？）
-Suo: 这老头好像搞错了什么。
-Suo: 这个可以作为线索。
-@unlockTestimony id:Inquiry num:2
-# END
-Suo: 嗯……你……您说的话没有问题！绝对正确！
-Xizhuren: 哼！
-
+@wait 1.0
+Suo: 实验结果怎么了？
+Xizhuren: 你母亲没教过你打断别人说话是不礼貌的么？
+Suo: ……
+学生们的声援声因为我冲动的举止而减少了。
 @stopMada

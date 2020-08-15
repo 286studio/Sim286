@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4788036636591014}
   - component: {fileID: 198484196505431712}
   - component: {fileID: 199299638340247366}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Bubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4769,7 +4769,7 @@ GameObject:
   - component: {fileID: 4202022324387108}
   - component: {fileID: 108108600115150234}
   - component: {fileID: 114970998950348076}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4878,7 +4878,7 @@ GameObject:
   - component: {fileID: 4210407442255640}
   - component: {fileID: 198382579107503914}
   - component: {fileID: 199199701051105568}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9402,7 +9402,7 @@ GameObject:
   - component: {fileID: 4672788831277554}
   - component: {fileID: 198609691883105020}
   - component: {fileID: 199949620035339092}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Text Boom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9418,7 +9418,7 @@ Transform:
   m_GameObject: {fileID: 1720670327315042}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.20000005, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children: []
   m_Father: {fileID: 4977646799359860}
   m_RootOrder: 3
@@ -9506,7 +9506,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.3
+      scalar: 1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -14142,7 +14142,7 @@ GameObject:
   - component: {fileID: 4754816930656422}
   - component: {fileID: 198961291988319864}
   - component: {fileID: 199829158121271582}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Lines
   m_TagString: FxTemporaire
   m_Icon: {fileID: 0}
@@ -18820,7 +18820,7 @@ GameObject:
   - component: {fileID: 198194127032045410}
   - component: {fileID: 199200332811060622}
   - component: {fileID: 114566962382578006}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Mada
   m_TagString: FxTemporaire
   m_Icon: {fileID: 0}

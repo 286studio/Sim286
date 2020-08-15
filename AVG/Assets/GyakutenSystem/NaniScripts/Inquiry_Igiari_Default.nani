@@ -1,7 +1,9 @@
 
-这个……请您看看……
-！！！
-居然被无视了。
-好没面子啊。
-
+@printer  visible:false
+@gyakutenSpawn Igiari
+@wait 1
+Suo: ……
+Xizhuren: 宇文同学！
+Xizhuren: 再大吵大闹我只好请你出去了！
+学生们的声援声因为我冲动的举止而减少了。
 @stopIgiari

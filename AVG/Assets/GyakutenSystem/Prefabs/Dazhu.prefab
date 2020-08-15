@@ -14086,7 +14086,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c47b841962bd7984e9fe984dc82cd73e, type: 2}
+  - {fileID: 2100000, guid: 4336efc238383354e8ab2fe2e067b28b, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -18821,7 +18821,7 @@ GameObject:
   - component: {fileID: 199200332811060622}
   - component: {fileID: 114566962382578006}
   m_Layer: 5
-  m_Name: Igiari
+  m_Name: Dazhu
   m_TagString: FxTemporaire
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

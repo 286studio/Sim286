@@ -1,0 +1,30 @@
+
+@printer  visible:false
+@gyakutenSpawn Mada
+@breakWords id:Zsbg segments:某位,前成员,指的,当然,就是,诸葛,瑾瑜， timeLimit:10 author:Xizhuren words:那么请问，宇文朔同学，我的话是哪里有问题呢？
+#Zsbg_1
+#Zsbg_3
+#Zsbg_4
+#Zsbg_5
+#Zsbg_6
+#Zsbg_7
+Xizhuren: 这份终审报告有什么问题么？
+@back 终审报告第一页
+Suo: 嗯……这个……那个……
+@back 学术报告厅反打放大
+Xizhuren: 如果要说没有根据的话就算造谣！你知道后果的吧！
+Suo: 嗯……你……您说的话没有问题！绝对正确！
+Xizhuren: 哼！
+@stopIgiari
+
+#Zsbg_2
+Suo: 系主任，看看这份终审报告吧。
+@back 终审报告第一页
+终审报告第一页上，赫然写着——
+Xizhuren: “报告人：诸葛瑾瑜，谈明美，宇文朔”……
+Suo: 这7年来，诸葛瑾瑜师兄一直是我们项目组的成员，
+Suo: 而不是你说的“前成员”！
+Suo: 这不是“我”的报告，而是“我们组”的报告。
+Suo: 这样就符合要求了吧！
+@inquirySuccess
+@stopIgiari

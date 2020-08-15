@@ -38,39 +38,62 @@ Xizhuren: 你们的报告，不符合要求。
 @zhuijiukaishi text:~不符合要求的理由~
 @back 学术报告厅反打放大
 # Start
-@inquiryStart id:Inquiry count:5 hidden:2,4
+@inquiryStart id:Inquiry count:5 hidden:3
 @testimony num:1
 @testimony num:2
 @testimony num:3
 @testimony num:4
 @testimony num:5
 @inquiryEnd
-他杠杠滴话里，好像并没有破绽。
-还是再思考一下吧...
+Suo: （如果不能提出反对理由的话一切就结束了）
+Suo: （等等……）
+Suo: （系主任貌似对我们项目组的人事不太了解）
+Suo: （也许可以利用这一点来提出反对）
 @goto Inquiry.Start
 @stop
 ; main script ends here
 
 # Inquiry1
-Xizhuren: 最近，有关这个项目组的某位前成员——
+Xizhuren: 你的实验结果————
 @stop
 
 # Inquiry2
-Xizhuren: 某位前成员指的当然就是诸葛瑾瑜，
+Xizhuren: 这个项目组的某位前成员7年前就得出来了吧？
 @stop
 
 # Inquiry3
-Xizhuren: 校论坛上有一些不好的谣言，说校方嫉贤妒能，迫害良才。
+Xizhuren: 某位前成员指的当然就是诸葛瑾瑜，
 @stop
 
 # Inquiry4
-证言4
+Xizhuren: 你只是重复了他七年前的实验而已。
 @stop
 
 # Inquiry5
-证言5
+Xizhuren: 所以，你们的报告，不符合要求。
 # InquiryEND
-系主任被我怼的哑口无言。
-后面发生的事你们都知道了。
-（演示完毕）
+Xizhuren: “项目负责人：谈明美”……
+@back 学术报告厅反打放大
+Xizhuren: 既然这样，那就抱歉了。
+不由分说地，系主任将报告撕成两半。
+@printer  visible:false
+@gyakutenSpawn Mada
+@wait 1
+Suo: 老师，你这是什么意思？！
+@printer  visible:false
+@gyakutenSpawn Dazhu
+@wait 1
+Xizhuren: 终审报告，负责人必须到场，否则不予通过。
+@printer  visible:false
+@gyakutenSpawn Mada
+@wait 1
+Suo: 你……一开始就知道这个规定，对吗？
+@printer  visible:false
+@gyakutenSpawn Dazhu
+@wait 1
+Xizhuren: 对。真不好意思，让你白忙了。
+Suo: （这就是最后的最后了吗）
+@printer  visible:false
+@gyakutenSpawn Mada
+（可能是谈明美来了，演示完毕）
 @stop

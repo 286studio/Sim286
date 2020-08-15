@@ -1,7 +1,19 @@
 
-对证言3提出质问！
-你的发言的有不清不楚的地方！
-请详尽地解释！
-请把刚刚说的加入证言里吧。
-@unlockTestimony id:Inquiry num:4
+@printer  visible:false
+@gyakutenSpawn Mada
+@wait 1
+Suo: 7年前，诸葛师兄做到了比我更好的结果，
+Suo: 但是他的发现没有被校方重视，反而受到校方的迫害！
+@printer  visible:false
+@gyakutenSpawn Dazhu
+@breakWordsAuto id:zabc2 segments:但是，,他的发现,没有,被校方重视,，反而,受到,校方的迫害！ timeLimit:10 select:7
+@gyakutenSpawn Yipaihuyan
+@wait 1
+Xizhuren: 最近校论坛上有一些不好的谣言，说校方嫉贤妒能，迫害良才。
+会场“嗡”一下，充满了议论声。
+Xizhuren: 这些谣言，极大干扰了教学秩序，所以——
+Xizhuren: 从现在起，再有造谣传谣者，一律严肃处理、绝不姑息！
+Xizhuren: 宇文同学，你该不会是想往枪口上撞吧？
+Suo: ……（想在还不是和他硬碰硬的时候）
+Xizhuren: 哼！
 @stopMada
